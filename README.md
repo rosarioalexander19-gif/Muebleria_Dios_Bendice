@@ -176,6 +176,7 @@ Además, mediante `base_de_datos.sql` y GitHub, los demás integrantes pueden co
 **Responsabilidad:** Base de Datos y Conexión.
 
 # DANIELA REYES HEREDIA
+
 #Módulo de Login, Usuarios y Clientes.
 Este módulo forma parte del proyecto y tiene como objetivo gestionar el acceso al sistema mediante un login, además de permitir la administración de usuarios y clientes.
 
@@ -256,7 +257,6 @@ Contiene:
 * Cédula
 * Teléfono
 * Dirección
-
 
 # 6. Creación de la base de datos
 
@@ -339,23 +339,19 @@ En este archivo desarrollé la ventana de inicio de sesión.
 
 La ventana contiene:
 
-```text
 INICIO DE SESIÓN
 
-Usuario:     ___________
+Usuario:   
 
-Contraseña:  ___________
+Contraseña: 
 
 [ Iniciar sesión ]
-```
 
 Cuando el usuario introduce sus datos, el Login utiliza el `UsuarioService` para comprobar si las credenciales son correctas.
 
 Si son correctas, se permite el acceso al sistema.
 
 Si son incorrectas, aparece un mensaje indicando que el usuario o contraseña no son correctos.
-
----
 
 # 10. clientes.py
 
@@ -381,23 +377,6 @@ Seleccionar un cliente de la tabla, modificar sus datos y guardar los cambios.
 ### Eliminar
 
 Seleccionar un cliente y eliminarlo de la base de datos.
-
-# 11. Arquitectura utilizada
-
-Para desarrollar mi parte utilicé una arquitectura por capas:
-             INTERFAZ
-                 │
-                 ▼
-                UI
-                 │
-                 ▼
-              SERVICE
-                 │
-                 ▼
-             REPOSITORY
-                 │
-                 ▼
-               MySQL
 
 Cada capa tiene una responsabilidad diferente.
 
