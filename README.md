@@ -175,7 +175,7 @@ Además, mediante `base_de_datos.sql` y GitHub, los demás integrantes pueden co
 
 **Responsabilidad:** Base de Datos y Conexión.
 
-# DANIELA REYES HEREDIA
+####### DANIELA REYES HEREDIA###########
 
 #Módulo de Login, Usuarios y Clientes.
 Este módulo forma parte del proyecto y tiene como objetivo gestionar el acceso al sistema mediante un login, además de permitir la administración de usuarios y clientes.
