@@ -1,4 +1,4 @@
-from repository.conexion import conectar
+from conexion import conectar
 
 def insertar_producto(producto):
     conexion = conectar()
