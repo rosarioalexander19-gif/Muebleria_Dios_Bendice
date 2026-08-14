@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -11,17 +10,18 @@ class ClientesWindow:
 
         self.ventana = tk.Tk()
         self.ventana.title("Gestión de Clientes")
-        self.ventana.geometry("900x500")
+        self.ventana.geometry("1000x600")
 
         tk.Label(
             self.ventana,
             text="GESTIÓN DE CLIENTES",
-            font=("Arial", 18)
+            font=("Arial", 18, "bold")
         ).pack(pady=10)
 
         formulario = tk.Frame(self.ventana)
         formulario.pack(pady=10)
 
+        # Nombre
         tk.Label(formulario, text="Nombre:").grid(
             row=0, column=0, padx=5, pady=5
         )
@@ -29,27 +29,47 @@ class ClientesWindow:
         self.nombre = tk.Entry(formulario, width=30)
         self.nombre.grid(row=0, column=1)
 
-        tk.Label(formulario, text="Cédula:").grid(
+        # Apellido
+        tk.Label(formulario, text="Apellido:").grid(
             row=1, column=0, padx=5, pady=5
         )
 
-        self.cedula = tk.Entry(formulario, width=30)
-        self.cedula.grid(row=1, column=1)
+        self.apellido = tk.Entry(formulario, width=30)
+        self.apellido.grid(row=1, column=1)
 
-        tk.Label(formulario, text="Teléfono:").grid(
+        # Cédula
+        tk.Label(formulario, text="Cédula:").grid(
             row=2, column=0, padx=5, pady=5
         )
 
-        self.telefono = tk.Entry(formulario, width=30)
-        self.telefono.grid(row=2, column=1)
+        self.cedula = tk.Entry(formulario, width=30)
+        self.cedula.grid(row=2, column=1)
 
-        tk.Label(formulario, text="Dirección:").grid(
+        # Teléfono
+        tk.Label(formulario, text="Teléfono:").grid(
             row=3, column=0, padx=5, pady=5
         )
 
-        self.direccion = tk.Entry(formulario, width=30)
-        self.direccion.grid(row=3, column=1)
+        self.telefono = tk.Entry(formulario, width=30)
+        self.telefono.grid(row=3, column=1)
 
+        # Dirección
+        tk.Label(formulario, text="Dirección:").grid(
+            row=4, column=0, padx=5, pady=5
+        )
+
+        self.direccion = tk.Entry(formulario, width=30)
+        self.direccion.grid(row=4, column=1)
+
+        # Correo
+        tk.Label(formulario, text="Correo:").grid(
+            row=5, column=0, padx=5, pady=5
+        )
+
+        self.correo = tk.Entry(formulario, width=30)
+        self.correo.grid(row=5, column=1)
+
+        # Botones
         botones = tk.Frame(self.ventana)
         botones.pack(pady=10)
 
@@ -71,12 +91,15 @@ class ClientesWindow:
             command=self.eliminar_cliente
         ).pack(side=tk.LEFT, padx=5)
 
+        # Tabla
         columnas = (
             "id",
             "nombre",
+            "apellido",
             "cedula",
             "telefono",
-            "direccion"
+            "direccion",
+            "correo"
         )
 
         self.tabla = ttk.Treeview(
@@ -87,9 +110,11 @@ class ClientesWindow:
 
         self.tabla.heading("id", text="ID")
         self.tabla.heading("nombre", text="Nombre")
+        self.tabla.heading("apellido", text="Apellido")
         self.tabla.heading("cedula", text="Cédula")
         self.tabla.heading("telefono", text="Teléfono")
         self.tabla.heading("direccion", text="Dirección")
+        self.tabla.heading("correo", text="Correo")
 
         self.tabla.pack(
             fill=tk.BOTH,
@@ -118,10 +143,12 @@ class ClientesWindow:
                 tk.END,
                 values=(
                     cliente.id_cliente,
-                    cliente.nombre_completo,
+                    cliente.nombre,
+                    cliente.apellido,
                     cliente.cedula,
                     cliente.telefono,
-                    cliente.direccion
+                    cliente.direccion,
+                    cliente.correo
                 )
             )
 
@@ -131,9 +158,11 @@ class ClientesWindow:
 
             self.cliente_service.crear_cliente(
                 self.nombre.get(),
+                self.apellido.get(),
                 self.cedula.get(),
                 self.telefono.get(),
-                self.direccion.get()
+                self.direccion.get(),
+                self.correo.get()
             )
 
             messagebox.showinfo(
@@ -166,9 +195,11 @@ class ClientesWindow:
         self.limpiar()
 
         self.nombre.insert(0, valores[1])
-        self.cedula.insert(0, valores[2])
-        self.telefono.insert(0, valores[3])
-        self.direccion.insert(0, valores[4])
+        self.apellido.insert(0, valores[2])
+        self.cedula.insert(0, valores[3])
+        self.telefono.insert(0, valores[4])
+        self.direccion.insert(0, valores[5])
+        self.correo.insert(0, valores[6])
 
         self.id_seleccionado = valores[0]
 
@@ -185,10 +216,12 @@ class ClientesWindow:
             self.id_seleccionado
         )
 
-        cliente.nombre_completo = self.nombre.get()
+        cliente.nombre = self.nombre.get()
+        cliente.apellido = self.apellido.get()
         cliente.cedula = self.cedula.get()
         cliente.telefono = self.telefono.get()
         cliente.direccion = self.direccion.get()
+        cliente.correo = self.correo.get()
 
         self.cliente_service.actualizar_cliente(cliente)
 
@@ -224,11 +257,14 @@ class ClientesWindow:
     def limpiar(self):
 
         self.nombre.delete(0, tk.END)
+        self.apellido.delete(0, tk.END)
         self.cedula.delete(0, tk.END)
         self.telefono.delete(0, tk.END)
         self.direccion.delete(0, tk.END)
+        self.correo.delete(0, tk.END)
+
+        if hasattr(self, "id_seleccionado"):
+            del self.id_seleccionado
 
     def mostrar(self):
         self.ventana.mainloop()
-
-
