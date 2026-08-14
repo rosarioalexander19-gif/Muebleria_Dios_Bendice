@@ -1,26 +1,29 @@
-
 class Cliente:
+
     def __init__(
         self,
         id_cliente=None,
-        nombre_completo="",
+        nombre="",
+        apellido="",
         cedula="",
         telefono="",
-        direccion=""
+        direccion="",
+        correo=""
     ):
         self.id_cliente = id_cliente
-        self.nombre_completo = nombre_completo
+        self.nombre = nombre
+        self.apellido = apellido
         self.cedula = cedula
         self.telefono = telefono
         self.direccion = direccion
+        self.correo = correo
 
     def __str__(self):
         return (
             f"{self.id_cliente} - "
-            f"{self.nombre_completo} - "
+            f"{self.nombre} {self.apellido} - "
             f"{self.cedula} - "
             f"{self.telefono} - "
-            f"{self.direccion}"
+            f"{self.direccion} - "
+            f"{self.correo}"
         )
-
-
