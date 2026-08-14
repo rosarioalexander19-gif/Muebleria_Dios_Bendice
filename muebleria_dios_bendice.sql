@@ -1,4 +1,4 @@
-﻿-- MySQL dump 10.13  Distrib 9.7.0, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 9.7.0, for Win64 (x86_64)
 --
 -- Host: localhost    Database: muebleria_dios_bendice
 -- ------------------------------------------------------
@@ -14,14 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `muebleria_dios_bendice`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `muebleria_dios_bendice` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `muebleria_dios_bendice`;
 
 --
 -- Table structure for table `clientes`
@@ -48,7 +40,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (2,'Juan','P├⌐rez','001-1234567-1','809-555-1001','Calle Duarte #101, La Romana','juan.perez@gmail.com'),(3,'Mar├¡a','G├│mez','001-2345678-2','809-555-1002','Calle Espaillat #25, La Romana','maria.gomez@gmail.com'),(4,'Carlos','Rodr├¡guez','001-3456789-3','809-555-1003','Calle Restauraci├│n #18, La Romana','carlos.rodriguez@gmail.com'),(5,'Ana','Mart├¡nez','001-4567890-4','809-555-1004','Calle Santa Rosa #42, La Romana','ana.martinez@gmail.com'),(6,'Luis','Hern├índez','001-5678901-5','809-555-1005','Calle Gregorio Luper├│n #77, La Romana','luis.hernandez@gmail.com'),(7,'Laura','Castillo','001-6789012-6','809-555-1006','Calle Pedro A. Lluberes #33, La Romana','laura.castillo@gmail.com'),(8,'Pedro','Ram├¡rez','001-7890123-7','809-555-1007','Calle Francisco Richiez #15, La Romana','pedro.ramirez@gmail.com'),(9,'Sof├¡a','Torres','001-8901234-8','809-555-1008','Calle Padre Abreu #64, La Romana','sofia.torres@gmail.com'),(10,'Miguel','Santos','001-9012345-9','809-555-1009','Calle Independencia #29, La Romana','miguel.santos@gmail.com'),(11,'Daniela','Morales','001-0123456-0','809-555-1010','Calle Libertad #51, La Romana','daniela.morales@gmail.com');
+INSERT INTO `clientes` VALUES (2,'Juan','Pérez','001-1234567-1','809-555-1001','Calle Duarte #101, La Romana','juan.perez@gmail.com'),(3,'María','Gómez','001-2345678-2','809-555-1002','Calle Espaillat #25, La Romana','maria.gomez@gmail.com'),(4,'Carlos','Rodríguez','001-3456789-3','809-555-1003','Calle Restauración #18, La Romana','carlos.rodriguez@gmail.com'),(5,'Ana','Martínez','001-4567890-4','809-555-1004','Calle Santa Rosa #42, La Romana','ana.martinez@gmail.com'),(6,'Luis','Hernández','001-5678901-5','809-555-1005','Calle Gregorio Luperón #77, La Romana','luis.hernandez@gmail.com'),(7,'Laura','Castillo','001-6789012-6','809-555-1006','Calle Pedro A. Lluberes #33, La Romana','laura.castillo@gmail.com'),(8,'Pedro','Ramírez','001-7890123-7','809-555-1007','Calle Francisco Richiez #15, La Romana','pedro.ramirez@gmail.com'),(9,'Sofía','Torres','001-8901234-8','809-555-1008','Calle Padre Abreu #64, La Romana','sofia.torres@gmail.com'),(10,'Miguel','Santos','001-9012345-9','809-555-1009','Calle Independencia #29, La Romana','miguel.santos@gmail.com'),(11,'Daniela','Morales','001-0123456-0','809-555-1010','Calle Libertad #51, La Romana','daniela.morales@gmail.com');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +207,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (9,'Juego de Sala 3 Piezas',45000.00,9),(10,'Sof├í de 3 Plazas',28000.00,15),(11,'Sof├í de 2 Plazas',22000.00,12),(12,'Juego de Comedor 6 Sillas',35000.00,7),(13,'Mesa de Comedor',18000.00,10),(14,'Silla de Comedor',4500.00,30),(15,'Cama Matrimonial',25000.00,12),(16,'Cama Queen',32000.00,9),(17,'Cama King',40000.00,8),(18,'Armario de 6 Puertas',30000.00,10),(19,'Armario de 4 Puertas',22000.00,12),(20,'Mesa de Centro',8500.00,14),(21,'Mueble para TV',16000.00,10),(22,'Escritorio',12000.00,15),(23,'C├│moda de 6 Gavetas',19500.00,10);
+INSERT INTO `productos` VALUES (9,'Juego de Sala 3 Piezas',45000.00,9),(10,'Sofá de 3 Plazas',28000.00,15),(11,'Sofá de 2 Plazas',22000.00,12),(12,'Juego de Comedor 6 Sillas',35000.00,7),(13,'Mesa de Comedor',18000.00,10),(14,'Silla de Comedor',4500.00,30),(15,'Cama Matrimonial',25000.00,12),(16,'Cama Queen',32000.00,9),(17,'Cama King',40000.00,8),(18,'Armario de 6 Puertas',30000.00,10),(19,'Armario de 4 Puertas',22000.00,12),(20,'Mesa de Centro',8500.00,14),(21,'Mueble para TV',16000.00,10),(22,'Escritorio',12000.00,15),(23,'Cómoda de 6 Gavetas',19500.00,10);
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +221,7 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
   `nombre_usuario` varchar(50) NOT NULL,
-  `contrase├▒a` varchar(100) NOT NULL,
+  `contraseña` varchar(100) NOT NULL,
   `rol` varchar(30) NOT NULL,
   `estado` varchar(20) DEFAULT 'Activo',
   PRIMARY KEY (`id_usuario`)
@@ -259,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-08-13 21:51:03
+-- Dump completed on 2026-08-13 22:07:44
