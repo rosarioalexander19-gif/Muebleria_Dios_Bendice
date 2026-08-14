@@ -1,12 +1,12 @@
-
 import tkinter as tk
 from tkinter import messagebox
 
 
 class LoginWindow:
 
-    def __init__(self, usuario_service):
+    def __init__(self, usuario_service, abrir_menu):
         self.usuario_service = usuario_service
+        self.abrir_menu = abrir_menu
 
         self.ventana = tk.Tk()
         self.ventana.title("Inicio de sesión")
@@ -54,6 +54,7 @@ class LoginWindow:
         )
 
         if resultado:
+
             messagebox.showinfo(
                 "Éxito",
                 "Inicio de sesión correcto."
@@ -61,7 +62,10 @@ class LoginWindow:
 
             self.ventana.destroy()
 
+            self.abrir_menu()
+
         else:
+
             messagebox.showerror(
                 "Error",
                 "Usuario o contraseña incorrectos."
@@ -69,5 +73,4 @@ class LoginWindow:
 
     def mostrar(self):
         self.ventana.mainloop()
-
 
