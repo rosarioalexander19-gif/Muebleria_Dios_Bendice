@@ -1,4 +1,3 @@
-
 from model.cliente import Cliente
 
 
@@ -9,14 +8,19 @@ class ClienteService:
 
     def crear_cliente(
         self,
-        nombre_completo,
+        nombre,
+        apellido,
         cedula,
         telefono,
-        direccion
+        direccion,
+        correo
     ):
 
-        if not nombre_completo:
+        if not nombre:
             raise ValueError("El nombre es obligatorio.")
+
+        if not apellido:
+            raise ValueError("El apellido es obligatorio.")
 
         if not cedula:
             raise ValueError("La cédula es obligatoria.")
@@ -27,11 +31,16 @@ class ClienteService:
         if not direccion:
             raise ValueError("La dirección es obligatoria.")
 
+        if not correo:
+            raise ValueError("El correo es obligatorio.")
+
         cliente = Cliente(
-            nombre_completo=nombre_completo,
+            nombre=nombre,
+            apellido=apellido,
             cedula=cedula,
             telefono=telefono,
-            direccion=direccion
+            direccion=direccion,
+            correo=correo
         )
 
         return self.cliente_repository.crear(cliente)
@@ -47,5 +56,3 @@ class ClienteService:
 
     def eliminar_cliente(self, id_cliente):
         self.cliente_repository.eliminar(id_cliente)
-
-
