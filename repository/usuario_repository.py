@@ -1,4 +1,3 @@
-
 from model.usuario import Usuario
 
 
@@ -12,14 +11,15 @@ class UsuarioRepository:
 
         sql = """
             INSERT INTO usuarios
-            (nombre, usuario, password)
-            VALUES (%s, %s, %s)
+            (nombre_usuario, `contrase├▒a`, rol, estado)
+            VALUES (%s, %s, %s, %s)
         """
 
         valores = (
-            usuario.nombre,
-            usuario.usuario,
-            usuario.password
+            usuario.nombre_usuario,
+            usuario.contrasena,
+            usuario.rol,
+            usuario.estado
         )
 
         cursor.execute(sql, valores)
@@ -46,10 +46,11 @@ class UsuarioRepository:
 
         for fila in filas:
             usuario = Usuario(
-                fila[0],
-                fila[1],
-                fila[2],
-                fila[3]
+                id_usuario=fila[0],
+                nombre_usuario=fila[1],
+                contrasena=fila[2],
+                rol=fila[3],
+                estado=fila[4]
             )
 
             usuarios.append(usuario)
@@ -61,7 +62,7 @@ class UsuarioRepository:
 
         sql = """
             SELECT * FROM usuarios
-            WHERE usuario = %s
+            WHERE nombre_usuario = %s
         """
 
         cursor.execute(sql, (nombre_usuario,))
@@ -72,10 +73,11 @@ class UsuarioRepository:
 
         if fila:
             return Usuario(
-                fila[0],
-                fila[1],
-                fila[2],
-                fila[3]
+                id_usuario=fila[0],
+                nombre_usuario=fila[1],
+                contrasena=fila[2],
+                rol=fila[3],
+                estado=fila[4]
             )
 
         return None
@@ -85,16 +87,18 @@ class UsuarioRepository:
 
         sql = """
             UPDATE usuarios
-            SET nombre = %s,
-                usuario = %s,
-                password = %s
+            SET nombre_usuario = %s,
+                `contrase├▒a` = %s,
+                rol = %s,
+                estado = %s
             WHERE id_usuario = %s
         """
 
         valores = (
-            usuario.nombre,
-            usuario.usuario,
-            usuario.password,
+            usuario.nombre_usuario,
+            usuario.contrasena,
+            usuario.rol,
+            usuario.estado,
             usuario.id_usuario
         )
 
@@ -117,5 +121,3 @@ class UsuarioRepository:
         self.conexion.commit()
 
         cursor.close()
-
-
