@@ -1,4 +1,3 @@
-
 from model.cliente import Cliente
 
 
@@ -12,19 +11,20 @@ class ClienteRepository:
 
         sql = """
             INSERT INTO clientes
-            (nombre_completo, cedula, telefono, direccion)
-            VALUES (%s, %s, %s, %s)
+            (nombre, apellido, cedula, telefono, direccion, correo)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """
 
         valores = (
-            cliente.nombre_completo,
+            cliente.nombre,
+            cliente.apellido,
             cliente.cedula,
             cliente.telefono,
-            cliente.direccion
+            cliente.direccion,
+            cliente.correo
         )
 
         cursor.execute(sql, valores)
-
         self.conexion.commit()
 
         cliente.id_cliente = cursor.lastrowid
@@ -36,9 +36,7 @@ class ClienteRepository:
     def obtener_todos(self):
         cursor = self.conexion.cursor()
 
-        sql = "SELECT * FROM clientes"
-
-        cursor.execute(sql)
+        cursor.execute("SELECT * FROM clientes")
 
         filas = cursor.fetchall()
 
@@ -48,11 +46,13 @@ class ClienteRepository:
 
         for fila in filas:
             cliente = Cliente(
-                fila[0],
-                fila[1],
-                fila[2],
-                fila[3],
-                fila[4]
+                id_cliente=fila[0],
+                nombre=fila[1],
+                apellido=fila[2],
+                cedula=fila[3],
+                telefono=fila[4],
+                direccion=fila[5],
+                correo=fila[6]
             )
 
             clientes.append(cliente)
@@ -75,11 +75,13 @@ class ClienteRepository:
 
         if fila:
             return Cliente(
-                fila[0],
-                fila[1],
-                fila[2],
-                fila[3],
-                fila[4]
+                id_cliente=fila[0],
+                nombre=fila[1],
+                apellido=fila[2],
+                cedula=fila[3],
+                telefono=fila[4],
+                direccion=fila[5],
+                correo=fila[6]
             )
 
         return None
@@ -89,18 +91,22 @@ class ClienteRepository:
 
         sql = """
             UPDATE clientes
-            SET nombre_completo = %s,
+            SET nombre = %s,
+                apellido = %s,
                 cedula = %s,
                 telefono = %s,
-                direccion = %s
+                direccion = %s,
+                correo = %s
             WHERE id_cliente = %s
         """
 
         valores = (
-            cliente.nombre_completo,
+            cliente.nombre,
+            cliente.apellido,
             cliente.cedula,
             cliente.telefono,
             cliente.direccion,
+            cliente.correo,
             cliente.id_cliente
         )
 
@@ -123,5 +129,3 @@ class ClienteRepository:
         self.conexion.commit()
 
         cursor.close()
-
-
