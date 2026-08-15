@@ -648,3 +648,234 @@ Esta organización ayuda a que el proyecto sea más ordenado y facilita realizar
 Con esta parte del proyecto se logró implementar la gestión de usuarios y clientes, incluyendo el inicio de sesión, registro, consulta, actualización y eliminación de información.
 
 El uso de Python, Tkinter y MySQL permitió conectar la interfaz gráfica con la lógica del programa y la base de datos. También aprendí a separar las diferentes funciones del sistema para que el código sea más fácil de organizar y mantener.
+
+# Gestión de Productos
+
+## 1. Descripción
+
+La gestión de productos permite registrar, consultar, modificar y eliminar los productos de la mueblería.
+
+Esta parte del sistema fue desarrollada utilizando Python, Tkinter y MySQL. El módulo permite que el usuario pueda administrar la información de los productos mediante una interfaz gráfica sencilla.
+
+Cada producto contiene un código o ID, nombre, precio y cantidad disponible en stock.
+
+---
+
+## 2. Funcionalidades
+
+El módulo de productos permite realizar las siguientes operaciones:
+
+- Registrar productos nuevos.
+- Consultar los productos registrados.
+- Editar la información de un producto.
+- Eliminar productos.
+- Mostrar los productos en una tabla.
+- Validar los datos introducidos por el usuario.
+- Limpiar los campos del formulario.
+
+---
+
+## 3. Datos de los productos
+
+Cada producto maneja los siguientes datos:
+
+| Campo | Descripción |
+|---|---|
+| ID | Identificador único del producto |
+| Nombre | Nombre del producto |
+| Precio | Precio del producto |
+| Stock | Cantidad disponible del producto |
+
+---
+
+## 4. Organización del código
+
+La funcionalidad de productos está organizada por responsabilidades para mantener el código ordenado y facilitar su mantenimiento.
+
+### Modelo
+
+El archivo `producto.py` contiene la clase `Producto`.
+
+La clase representa un producto y almacena:
+
+- ID del producto.
+- Nombre.
+- Precio.
+- Stock.
+
+También cuenta con un método que permite mostrar la información del producto.
+
+---
+
+### Repositorio
+
+El repositorio se encarga de realizar las operaciones directamente con la base de datos.
+
+Las operaciones principales son:
+
+- Insertar productos.
+- Obtener productos.
+- Actualizar productos.
+- Eliminar productos.
+
+Para guardar un producto se utiliza una sentencia `INSERT`.
+
+Para consultar los productos se utiliza una sentencia `SELECT`.
+
+Para modificar un producto se utiliza una sentencia `UPDATE`.
+
+Para eliminar un producto se utiliza una sentencia `DELETE`.
+
+---
+
+### Servicio
+
+El servicio contiene la lógica y las validaciones necesarias antes de realizar las operaciones en la base de datos.
+
+Las principales funciones son:
+
+- `guardar_producto()`
+- `listar_productos()`
+- `editar_producto()`
+- `borrar_producto()`
+
+Antes de guardar o editar un producto se realizan las siguientes validaciones:
+
+- El nombre no puede estar vacío.
+- El precio debe ser mayor que 0.
+- El stock no puede ser negativo.
+
+Estas validaciones ayudan a evitar que se introduzcan datos incorrectos en el sistema.
+
+---
+
+## 5. Interfaz gráfica
+
+La interfaz gráfica fue desarrollada utilizando Tkinter.
+
+La ventana tiene como título:
+
+**GESTIÓN DE PRODUCTOS**
+
+El formulario permite introducir los siguientes datos:
+
+- Código.
+- Nombre.
+- Precio.
+- Stock.
+
+Los productos registrados se muestran en una tabla utilizando `Treeview`.
+
+La tabla muestra las columnas:
+
+- ID.
+- Nombre.
+- Precio.
+- Stock.
+
+---
+
+## 6. Botones de la interfaz
+
+La interfaz cuenta con cuatro botones principales:
+
+### Guardar
+
+Permite registrar un nuevo producto en la base de datos.
+
+### Editar
+
+Permite modificar la información de un producto seleccionado.
+
+### Eliminar
+
+Permite eliminar un producto después de confirmar la operación.
+
+### Limpiar
+
+Permite borrar la información de los campos del formulario.
+
+---
+
+## 7. Selección de productos
+
+Cuando el usuario selecciona un producto desde la tabla, sus datos se cargan automáticamente en los campos del formulario.
+
+Esto permite consultar la información y posteriormente editarla o eliminarla.
+
+---
+
+## 8. Conexión con la base de datos
+
+El módulo utiliza una conexión con la base de datos para almacenar y consultar la información de los productos.
+
+Las operaciones realizadas desde la interfaz gráfica son enviadas al servicio, posteriormente al repositorio y finalmente a la base de datos.
+
+El flujo de trabajo es:
+
+**Interfaz gráfica → Servicio → Repositorio → Base de datos**
+
+Para consultar información, el proceso funciona de manera inversa:
+
+**Base de datos → Repositorio → Servicio → Interfaz gráfica**
+
+---
+
+## 9. Flujo para registrar un producto
+
+El proceso para registrar un producto funciona de la siguiente manera:
+
+1. El usuario introduce el nombre, precio y stock.
+2. Presiona el botón **Guardar**.
+3. El servicio valida los datos.
+4. Si los datos son correctos, se crea el objeto `Producto`.
+5. El repositorio inserta el producto en la base de datos.
+6. Se muestra un mensaje indicando que el producto fue guardado correctamente.
+7. La tabla se actualiza para mostrar el nuevo producto.
+
+---
+
+## 10. Flujo para editar un producto
+
+Para editar un producto:
+
+1. El usuario selecciona un producto de la tabla.
+2. Los datos se cargan en el formulario.
+3. El usuario modifica la información necesaria.
+4. Presiona el botón **Editar**.
+5. El sistema valida los datos.
+6. Se actualiza la información en la base de datos.
+7. La tabla se actualiza automáticamente.
+
+---
+
+## 11. Flujo para eliminar un producto
+
+Para eliminar un producto:
+
+1. El usuario selecciona un producto.
+2. Presiona el botón **Eliminar**.
+3. El sistema solicita confirmación.
+4. Si el usuario confirma, se elimina el producto.
+5. La tabla se actualiza y deja de mostrar el producto eliminado.
+
+---
+
+## 12. Tecnologías utilizadas
+
+Para desarrollar este módulo se utilizaron:
+
+- **Python** como lenguaje de programación.
+- **Tkinter** para crear la interfaz gráfica.
+- **MySQL** para almacenar la información.
+- **GitHub** para almacenar y gestionar el código del proyecto.
+
+---
+
+## 13. Conclusión
+
+El módulo de gestión de productos permite administrar de manera sencilla la información de los productos de la mueblería.
+
+La separación entre modelo, repositorio, servicio e interfaz gráfica permite mantener el código organizado y facilita realizar modificaciones posteriormente.
+
+Con esta funcionalidad, el usuario puede registrar, consultar, editar y eliminar productos, manteniendo actualizada la información del inventario.
