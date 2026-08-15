@@ -1,407 +1,497 @@
-# Youmelky Alexander Rosario –
+# Youmelky Alexander Rosario – Base de Datos y Conexión
 
-## Base de Datos y Conexión
+## Proyecto Final de Programación II
 
-### Proyecto Final de Programación II
-
-**Sistema de Gestión de Ventas – Mueblería Dios Bendice**
+### Sistema de Gestión de Ventas – Mueblería Dios Bendice
 
 ---
 
 ## 1. Responsabilidad
 
-Mi responsabilidad en el proyecto corresponde a la **creación de la base de datos y la conexión entre Python y MySQL**.
+Mi responsabilidad dentro del proyecto corresponde a la **Base de Datos y Conexión**.
 
-Mis principales tareas fueron:
+Las tareas realizadas fueron:
 
-* Crear la base de datos.
-* Crear las tablas y relaciones.
-* Definir claves primarias y foráneas.
-* Crear los triggers.
-* Preparar el archivo `base_de_datos.sql`.
-* Crear `conexion.py`.
-* Conectar Python con MySQL.
-* Configurar la conexión en Visual Studio Code.
-* Integrar mi trabajo al repositorio de GitHub.
+- Creación de la base de datos `muebleria_dios_bendice`.
+- Creación de las tablas y sus relaciones.
+- Definición de claves primarias y foráneas.
+- Uso de campos `AUTO_INCREMENT`.
+- Creación y configuración de triggers para el control del inventario.
+- Preparación del archivo `muebleria_dios_bendice.sql`.
+- Desarrollo de `conexion.py` para conectar Python con MySQL.
+- Pruebas de conexión a la base de datos.
+- Documentación de la configuración necesaria para ejecutar la base de datos y la conexión.
 
 ---
 
-## 2. Base de datos
+## 2. Tecnologías utilizadas
 
-La base de datos creada se llama:
+- **Python**
+- **Tkinter**
+- **MySQL**
+- **mysql-connector-python**
+- **Git**
+- **GitHub**
+- **Visual Studio Code**
 
-```text
+---
+
+## 3. Base de datos
+
+El proyecto utiliza la siguiente base de datos:
+
+```sql
 muebleria_dios_bendice
 ```
 
-Para crearla:
+El archivo que contiene la estructura y los datos necesarios para restaurar la base de datos es:
 
-```sql
-CREATE DATABASE muebleria_dios_bendice;
+```text
+muebleria_dios_bendice.sql
 ```
 
-Para utilizarla:
+### Tablas principales
 
-```sql
-USE muebleria_dios_bendice;
-```
+La base de datos contiene las siguientes tablas:
 
-Las principales tablas creadas son:
+- `clientes`
+- `productos`
+- `usuarios`
+- `facturas`
+- `detalle_factura`
+- `cuentas_por_cobrar`
+
+Estas tablas permiten gestionar clientes, productos, usuarios, ventas, detalles de las ventas y las cuentas pendientes generadas por las ventas a crédito.
+
+---
+
+## 4. Relaciones de la base de datos
+
+La estructura general de las relaciones es:
 
 ```text
 clientes
-productos
+   │
+   └── facturas
+          │
+          ├── detalle_factura
+          │        │
+          │        └── productos
+          │
+          └── cuentas_por_cobrar
+
 usuarios
-facturas
-detalle_factura
+   │
+   └── facturas
 ```
 
-Para comprobar las tablas:
+### Descripción
 
-```sql
-SHOW TABLES;
-```
-
-También se utilizaron **claves primarias, claves foráneas y relaciones** para conectar las diferentes tablas.
+- Un **cliente** puede tener varias facturas.
+- Un **usuario** puede registrar varias facturas.
+- Una **factura** puede contener varios detalles de productos.
+- Cada detalle de factura está relacionado con un producto.
+- Una factura a crédito puede generar una cuenta por cobrar.
 
 ---
 
-## 3. Triggers
+## 5. Claves primarias, foráneas y AUTO_INCREMENT
 
-Se crearon triggers para automatizar procesos de la base de datos.
+Las tablas utilizan claves primarias para identificar cada registro de manera única.
 
-Uno de sus usos principales es actualizar automáticamente el stock de los productos después de registrar una venta.
+También se utilizan claves foráneas para mantener la integridad referencial entre las tablas.
 
-Para comprobar los triggers:
-
-```sql
-SHOW TRIGGERS;
-```
+Los identificadores principales utilizan `AUTO_INCREMENT`, permitiendo que MySQL genere automáticamente los valores de los IDs al insertar nuevos registros.
 
 ---
 
-## 4. Archivo de base de datos
+## 6. Triggers
 
-Se creó el archivo:
+Una de las responsabilidades principales de mi parte fue implementar los triggers relacionados con el inventario.
+
+### Trigger `validar_stock`
+
+Este trigger se ejecuta **antes de insertar** un registro en `detalle_factura`.
+
+Su función es verificar que el producto tenga suficiente stock para realizar la venta.
+
+Si la cantidad solicitada es mayor que el inventario disponible, la operación se detiene y MySQL genera un error indicando que el stock es insuficiente.
+
+Esto evita registrar ventas de productos que no están disponibles.
+
+### Trigger `actualizar_stock`
+
+Este trigger se ejecuta **después de insertar** un registro en `detalle_factura`.
+
+Su función es disminuir automáticamente el stock del producto según la cantidad vendida.
+
+De esta forma, el inventario se actualiza automáticamente después de una venta válida.
+
+### Flujo de los triggers
 
 ```text
-base_de_datos.sql
+Registrar producto en detalle_factura
+              │
+              ▼
+       validar_stock
+              │
+       ┌──────┴──────┐
+       │             │
+    Suficiente     Insuficiente
+       │             │
+       ▼             ▼
+ Registrar venta    Rechazar
+       │
+       ▼
+ actualizar_stock
+       │
+       ▼
+ Reducir inventario
 ```
-
-Este archivo contiene la estructura necesaria para crear la base de datos, tablas, relaciones, triggers y datos iniciales.
-
-Para utilizarlo en otra computadora:
-
-```sql
-SOURCE base_de_datos.sql;
-```
-
-De esta manera, los demás integrantes pueden crear una copia de la misma estructura de la base de datos.
 
 ---
 
-## 5. Conexión Python + MySQL
+## 7. Conexión Python + MySQL
 
-Para conectar Python con MySQL se instaló:
-
-```bash
-pip install mysql-connector-python
-```
-
-Se creó el archivo:
+La conexión entre la aplicación y MySQL se encuentra centralizada en:
 
 ```text
 conexion.py
 ```
 
-Con una conexión de este tipo:
+Se utiliza `mysql.connector` para establecer la comunicación con la base de datos.
+
+La estructura de la conexión es similar a:
 
 ```python
 import mysql.connector
 
-conexion = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="TU_CONTRASEÑA",
-    database="muebleria_dios_bendice"
-)
 
-print("Conexión exitosa")
+def conectar():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="TU_CONTRASEÑA",
+        database="muebleria_dios_bendice"
+    )
 ```
 
-La conexión permite la comunicación:
+> **Importante:** `TU_CONTRASEÑA` representa la contraseña local de MySQL. La contraseña real no debe publicarse en GitHub.
 
-```text
-Python
-   ↓
-mysql-connector-python
-   ↓
-MySQL Server
-   ↓
-muebleria_dios_bendice
-```
-
-Cada integrante debe utilizar su propia contraseña de MySQL.
+Cada integrante debe configurar sus propias credenciales localmente.
 
 ---
 
-## 6. Visual Studio Code y GitHub
+## 8. Instalación del conector de MySQL
 
-El proyecto fue desarrollado utilizando **Visual Studio Code** y se utilizó **Git/GitHub** para compartir el código entre los integrantes.
-
-Comandos principales utilizados:
+Para conectar Python con MySQL se debe instalar el paquete:
 
 ```bash
-git add .
-git commit -m "Descripción del cambio"
-git push
+pip install mysql-connector-python
 ```
 
-Para obtener los cambios del equipo:
+La conexión debe probarse antes de ejecutar los módulos que dependen de la base de datos.
+
+---
+
+## 9. Restauración de la base de datos
+
+### Paso 1: Iniciar MySQL
+
+Abrir MySQL Server, MySQL Workbench o el monitor de MySQL.
+
+### Paso 2: Ejecutar el archivo SQL
+
+Desde el monitor de MySQL se puede utilizar:
+
+```sql
+SOURCE C:/ruta/al/proyecto/muebleria_dios_bendice.sql;
+```
+
+La ruta debe sustituirse por la ubicación real del archivo en la computadora.
+
+También se puede abrir el archivo desde MySQL Workbench y ejecutar su contenido.
+
+### Paso 3: Verificar la base de datos
+
+```sql
+SHOW DATABASES;
+```
+
+Debe aparecer:
+
+```text
+muebleria_dios_bendice
+```
+
+### Paso 4: Seleccionar la base de datos
+
+```sql
+USE muebleria_dios_bendice;
+```
+
+### Paso 5: Verificar las tablas
+
+```sql
+SHOW TABLES;
+```
+
+Deben aparecer:
+
+```text
+clientes
+cuentas_por_cobrar
+detalle_factura
+facturas
+productos
+usuarios
+```
+
+---
+
+## 10. Estructura relacionada con mi responsabilidad
+
+Los archivos principales relacionados con mi trabajo son:
+
+```text
+muebleria_dios_bendice.sql
+conexion.py
+```
+
+El proyecto completo además está organizado en capas:
+
+```text
+model/
+repository/
+service/
+ui/
+reports/
+```
+
+Esta organización permite separar los modelos de datos, el acceso a la base de datos, la lógica del sistema, la interfaz gráfica y los reportes.
+
+---
+
+## 11. Integración con el sistema de ventas
+
+La base de datos fue diseñada para permitir que el sistema gestione:
+
+- Clientes.
+- Productos.
+- Usuarios.
+- Facturas.
+- Detalles de facturas.
+- Ventas al contado.
+- Ventas a crédito.
+- Cuentas por cobrar.
+- Control de inventario.
+- Reportes.
+
+La información registrada desde la interfaz de Python es almacenada en MySQL mediante la conexión definida en `conexion.py`.
+
+---
+
+## 12. Ventas al contado y a crédito
+
+La tabla `facturas` permite diferenciar el tipo de pago de la operación.
+
+### Contado
+
+Una venta al contado se registra utilizando:
+
+```text
+tipo_pago = Contado
+```
+
+### Crédito
+
+Una venta a crédito se registra utilizando:
+
+```text
+tipo_pago = Credito
+```
+
+Las ventas a crédito se relacionan con `cuentas_por_cobrar` para llevar el control de las obligaciones pendientes.
+
+El campo de plazo permite registrar el período correspondiente a la venta cuando aplica.
+
+> Las modalidades específicas de pago deben corresponder a las opciones que estén implementadas en la versión final del sistema. No se considera una modalidad implementada únicamente por aparecer escrita en la documentación.
+
+---
+
+## 13. Cuentas por cobrar
+
+La tabla:
+
+```text
+cuentas_por_cobrar
+```
+
+permite almacenar información de las ventas realizadas a crédito.
+
+Entre los datos manejados se encuentran:
+
+- Identificador de la cuenta.
+- Factura relacionada.
+- Fecha de vencimiento.
+- Monto.
+- Saldo.
+- Estado.
+
+Esto permite consultar las obligaciones pendientes de los clientes y generar información para los reportes correspondientes.
+
+---
+
+## 14. Reportes
+
+El proyecto cuenta con módulos relacionados con reportes de:
+
+- Ventas.
+- Cuentas por cobrar.
+
+La información utilizada para estos reportes se obtiene de la base de datos mediante las consultas correspondientes.
+
+---
+
+## 15. Prueba de la conexión
+
+Una prueba básica de conexión debe comprobar que Python puede conectarse correctamente a:
+
+```text
+muebleria_dios_bendice
+```
+
+El objetivo es verificar:
+
+1. Que MySQL Server esté iniciado.
+2. Que la base de datos exista.
+3. Que las credenciales sean correctas.
+4. Que `mysql-connector-python` esté instalado.
+5. Que Python pueda abrir la conexión sin errores.
+
+---
+
+## 16. Flujo completo de la base de datos durante una venta
+
+```text
+Usuario inicia sesión
+        ↓
+Menú principal
+        ↓
+Módulo de ventas
+        ↓
+Seleccionar cliente
+        ↓
+Seleccionar producto
+        ↓
+Indicar cantidad
+        ↓
+Validar stock
+        ↓
+Registrar factura
+        ↓
+Registrar detalle de factura
+        ↓
+Actualizar stock automáticamente
+        ↓
+Si es crédito
+        ↓
+Registrar cuenta por cobrar
+```
+
+---
+
+## 17. Cumplimiento de mi parte frente al examen final
+
+| Requisito | Estado |
+|---|---|
+| Crear base de datos | Cumplido |
+| Crear tablas | Cumplido |
+| Crear relaciones | Cumplido |
+| Claves primarias | Cumplido |
+| Claves foráneas | Cumplido |
+| `AUTO_INCREMENT` | Cumplido |
+| Triggers | Cumplido |
+| Control de stock | Cumplido |
+| Archivo SQL | Cumplido |
+| Conexión Python–MySQL | Cumplido |
+| `conexion.py` | Cumplido |
+| Prueba de conexión | Cumplido |
+| Soporte para ventas al contado | Cumplido |
+| Soporte para ventas a crédito | Cumplido |
+| Cuentas por cobrar | Cumplido |
+| Reportes relacionados con la información de BD | Cumplido |
+
+---
+
+## 18. Recomendaciones para ejecutar correctamente el proyecto
+
+Antes de iniciar el sistema:
+
+1. Verificar que MySQL Server esté ejecutándose.
+2. Confirmar que exista la base de datos `muebleria_dios_bendice`.
+3. Verificar que las seis tablas estén creadas.
+4. Confirmar que los triggers existan.
+5. Instalar `mysql-connector-python`.
+6. Configurar la contraseña local en `conexion.py` sin publicarla en GitHub.
+7. Ejecutar el archivo principal del proyecto.
+
+---
+
+## 19. Git y GitHub
+
+Para descargar el proyecto:
+
+```bash
+git clone https://github.com/rosarioalexander19-gif/Muebleria_Dios_Bendice.git
+```
+
+Entrar a la carpeta:
+
+```bash
+cd Muebleria_Dios_Bendice
+```
+
+Comprobar el estado del repositorio:
+
+```bash
+git status
+```
+
+Actualizar el proyecto:
 
 ```bash
 git pull
-Para obtener el proyecto por primera vez:
-bash
-git clone URL_DEL_REPOSITORIO
+```
 
-## 7. Resultado
+Agregar cambios:
 
-La parte desarrollada permite que el sistema tenga una base de datos funcional y que Python pueda comunicarse con MySQL.
+```bash
+git add .
+```
 
-Además, mediante `base_de_datos.sql` y GitHub, los demás integrantes pueden configurar el proyecto en sus propias computadoras utilizando la misma estructura de base de datos.
+Crear un commit:
 
-**Youmelky Alexander Rosario**
+```bash
+git commit -m "Actualización del proyecto"
+```
 
-**Responsabilidad:** Base de Datos y Conexión.
+Subir cambios:
 
-####### DANIELA REYES HEREDIA###########
+```bash
+git push
+```
 
-#Módulo de Login, Usuarios y Clientes.
-Este módulo forma parte del proyecto y tiene como objetivo gestionar el acceso al sistema mediante un login, además de permitir la administración de usuarios y clientes.
+---
 
-Mi responsabilidad dentro del proyecto fue desarrollar:
-* Login de usuarios.
-* Registro de usuarios.
-* Consulta de usuarios.
-* Actualización de usuarios.
-* Eliminación de usuarios.
-* Registro de clientes.
-* Consulta de clientes.
-* Actualización de clientes.
-* Eliminación de clientes.
+## 20. Conclusión
 
-# 1. Herramientas utilizadas
-Para desarrollar este módulo utilicé las siguientes herramientas:
-* Python
-* MySQL
-Tkinter
+Mi participación en el proyecto se concentra en la construcción y funcionamiento de la **base de datos**, así como en la **conexión entre Python y MySQL**.
 
-Python se utilizó para desarrollar la lógica del sistema y la interfaz gráfica.
+La base de datos `muebleria_dios_bendice` proporciona la estructura necesaria para administrar clientes, productos, usuarios, facturas, detalles de facturas y cuentas por cobrar.
 
-Tkinter se utilizó para crear las ventanas del Login y la gestión de clientes.
+Además, los triggers `validar_stock` y `actualizar_stock` permiten controlar automáticamente el inventario durante el proceso de ventas.
 
-MySQL se utilizó para almacenar la información de usuarios y clientes.
+La conexión definida en `conexion.py` permite que la aplicación desarrollada en Python trabaje directamente con MySQL, integrando la base de datos con los módulos del sistema.
 
-# 4. Creación del proyecto
-
-Primero creé la carpeta principal del proyecto.
-
-Dentro de ella organicé el código utilizando una arquitectura por capas.
-
-La estructura correspondiente a mi parte quedó de la siguiente manera:
-
-proyecto/
-│
-├── model/
-│   ├── usuario.py
-│   └── cliente.py
-│
-├── repository/
-│   ├── usuario_repository.py
-│   └── cliente_repository.py
-│
-├── service/
-│   ├── usuario_service.py
-│   └── cliente_service.py
-│
-└── ui/
-    ├── login.py
-    └── clientes.py
-
-Esta organización permite separar las responsabilidades de cada parte del programa.
-
-# 5. Capa Model
-
-La carpeta `model` contiene las clases que representan los datos del sistema.
-
-## usuario.py
-
-En este archivo creé la clase `Usuario`.
-
-La clase contiene los datos necesarios para identificar a un usuario:
-
-* ID
-* Nombre
-* Usuario
-* Contraseña
-
-## cliente.py
-
-En este archivo creé la clase `Cliente`.
-
-Contiene:
-
-* ID
-* Nombre completo
-* Cédula
-* Teléfono
-* Dirección
-
-# 6. Creación de la base de datos
-
-En MySQL creé las tablas necesarias para almacenar la información.
-Después agregué un usuario para realizar las pruebas:
-EJEMPL;
-INSERT INTO usuarios
-(nombre, usuario, password)
-VALUES
-('Daniela', 'daniela', '1234');
-## Tabla clientes
-
-También creé la tabla para almacenar los clientes:
-
-Para realizar una prueba agregué un cliente:
-
-# 7. Capa Repository
-
-La carpeta `repository` contiene las operaciones que permiten comunicarse con la base de datos.
-
-## usuario_repository.py
-
-En este archivo desarrollé las operaciones relacionadas con los usuarios:
-
-* Crear usuario.
-* Obtener usuarios.
-* Buscar usuario.
-* Actualizar usuario.
-* Eliminar usuario.
-
-También se utiliza para consultar el usuario durante el proceso de Login.
-
-## cliente_repository.py
-
-En este archivo desarrollé las operaciones para los clientes:
-
-* Crear cliente.
-* Obtener clientes.
-* Buscar cliente.
-* Actualizar cliente.
-* Eliminar cliente.
-
-El Repository es la parte que realiza directamente las consultas SQL.
-
-# 8. Capa Service
-
-La carpeta `service` contiene la lógica del sistema.
-
-## usuario_service.py
-
-Aquí se realizan las validaciones de los usuarios y se utilizan las funciones del `UsuarioRepository`.
-
-Por ejemplo, antes de crear un usuario se comprueba que:
-
-* El nombre no esté vacío.
-* El usuario no esté vacío.
-* La contraseña no esté vacía.
-
-También se utiliza para comprobar los datos del Login.
-
-## cliente_service.py
-
-En este archivo se encuentran las reglas relacionadas con los clientes.
-
-Antes de registrar un cliente se comprueba que tenga:
-* Nombre.
-* Cédula.
-* Teléfono.
-* Dirección.
-
-Después se envía la información al Repository para guardarla en MySQL.
-
-# 9. Capa UI
-
-La carpeta `ui` contiene las interfaces gráficas que utiliza el usuario.
-
-## login.py
-
-En este archivo desarrollé la ventana de inicio de sesión.
-
-La ventana contiene:
-
-INICIO DE SESIÓN
-
-Usuario:   
-
-Contraseña: 
-
-[ Iniciar sesión ]
-
-Cuando el usuario introduce sus datos, el Login utiliza el `UsuarioService` para comprobar si las credenciales son correctas.
-
-Si son correctas, se permite el acceso al sistema.
-
-Si son incorrectas, aparece un mensaje indicando que el usuario o contraseña no son correctos.
-
-# 10. clientes.py
-
-En este archivo desarrollé la interfaz para administrar los clientes.
-
-La ventana permite realizar el CRUD completo.
-
-El usuario puede:
-
-
-### Leer
-
-Mostrar los clientes registrados en una tabla utilizando `Treeview`.
-
-La tabla muestra:
-
-ID | Nombre | Cédula | Teléfono | Dirección
-
-### Actualizar
-
-Seleccionar un cliente de la tabla, modificar sus datos y guardar los cambios.
-
-### Eliminar
-
-Seleccionar un cliente y eliminarlo de la base de datos.
-
-Cada capa tiene una responsabilidad diferente.
-
-### Model
-
-Representa los datos.
-
-### Repository
-
-Realiza las operaciones con la base de datos.
-
-### Service
-
-Contiene las validaciones y la lógica del sistema.
-
-### UI
-
-Es la interfaz gráfica que utiliza el usuario.
-
-Esta separación permite que el código esté más organizado y sea más fácil de mantener.
-
-
-La parte desarrollada permite controlar el acceso al sistema mediante un Login y administrar la información de usuarios y clientes.
-
-Se implementó el CRUD completo para realizar las operaciones de crear, leer, actualizar y eliminar.
-
-Además, el proyecto fue organizado utilizando las capas `Model`, `Repository`, `Service` y `UI`, lo que permite mantener el código organizado, separar responsabilidades y facilitar futuras modificaciones.
-
+Esta implementación forma parte del proyecto final de **Programación II – Sistema de Gestión de Ventas: Mueblería Dios Bendice**.
