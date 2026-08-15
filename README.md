@@ -879,3 +879,72 @@ El módulo de gestión de productos permite administrar de manera sencilla la in
 La separación entre modelo, repositorio, servicio e interfaz gráfica permite mantener el código organizado y facilita realizar modificaciones posteriormente.
 
 Con esta funcionalidad, el usuario puede registrar, consultar, editar y eliminar productos, manteniendo actualizada la información del inventario.
+
+
+--Participación de Claritza Esther Barry Brown--
+Módulo de Ventas, Facturación, Cuentas por Cobrar y Reportes
+
+Mi participación en el proyecto estuvo enfocada principalmente en el desarrollo y funcionamiento del proceso de ventas, incluyendo la creación de facturas, el registro de los productos vendidos y el manejo de las ventas realizadas a crédito.
+
+Se desarrolló la interfaz gráfica correspondiente al módulo de Ventas, utilizando Python y Tkinter. Esta interfaz permite introducir los datos necesarios para realizar una venta, como el ID del cliente, el ID del usuario, el tipo de pago, el plazo cuando la venta es a crédito, el ID del producto, la cantidad y el precio.
+
+También se implementó el proceso para agregar productos a una venta, calculando automáticamente el subtotal correspondiente a cada producto mediante la cantidad y el precio. Los productos agregados son mostrados en una tabla dentro de la interfaz, permitiendo visualizar la información antes de registrar definitivamente la venta.
+
+Otra parte importante fue la implementación del cálculo del total de la factura. El sistema toma los subtotales de todos los productos agregados y calcula automáticamente el monto total de la venta. Además, se agregaron validaciones para evitar cantidades o precios menores o iguales a cero y para impedir que se registre una factura sin productos.
+
+En cuanto a la facturación, se trabajó en el proceso de creación de una factura asociada a un cliente y a un usuario. Al registrar la venta, la información se almacena en la base de datos MySQL y se genera el número correspondiente de factura. También se registran los detalles de los productos incluidos en dicha factura.
+
+Se implementó además el manejo de ventas a crédito. Cuando el usuario selecciona el tipo de pago "Crédito", el sistema solicita un plazo en días y utiliza esta información para calcular la fecha de vencimiento. Posteriormente, se crea automáticamente un registro en la tabla de cuentas por cobrar, incluyendo el monto de la venta, el saldo pendiente y el estado de la cuenta.
+
+Para garantizar el correcto funcionamiento del proceso, se realizaron pruebas de integración entre la interfaz gráfica desarrollada en Python y la base de datos MySQL. Se verificó el registro de clientes, productos, facturas, detalles de facturas y cuentas por cobrar, así como la consulta posterior de la información mediante los reportes.
+
+También se participó en el desarrollo del módulo de Reportes, encargado de mostrar información relacionada con las ventas realizadas y las cuentas por cobrar. El reporte de ventas permite visualizar datos como el número de factura, fecha, cliente, tipo de pago y total de la venta. El reporte de cuentas por cobrar permite consultar las cuentas generadas por ventas a crédito, mostrando información como factura, cliente, fecha de vencimiento, monto, saldo y estado.
+
+Archivos y módulos trabajados
+
+Interfaz gráfica:
+
+ui/ventas.py
+ui/reportes.py
+
+Servicios:
+
+service/venta_service.py
+service/reporte_service.py
+
+Repositorios:
+
+repository/factura_repository.py
+repository/detalle_factura_repository.py
+repository/cuenta_cobrar_repository.py
+
+Modelos relacionados:
+
+model/factura.py
+model/detalle_factura.py
+model/cuenta_cobrar.py
+
+Reportes:
+
+reports/ventas_report.py
+reports/cuentas_cobrar_report.py
+Funcionalidades desarrolladas y comprobadas
+Registro de ventas.
+Agregar productos a una factura.
+Cálculo automático de subtotales.
+Cálculo automático del total de la venta.
+Validación de cantidades y precios.
+Selección del tipo de pago.
+Registro de ventas de contado.
+Registro de ventas a crédito.
+Validación del plazo de crédito.
+Cálculo de la fecha de vencimiento.
+Creación automática de cuentas por cobrar.
+Registro de facturas en MySQL.
+Registro de detalles de las facturas.
+Consulta de ventas mediante reportes.
+Consulta de cuentas por cobrar mediante reportes.
+Pruebas de conexión y funcionamiento entre Python, Tkinter y MySQL.
+Resultado
+
+El desarrollo de estos módulos permitió integrar el proceso de venta completo dentro del sistema de la Mueblería Dios Bendice, desde la selección del cliente y los productos hasta la generación de la factura, el manejo de créditos y la consulta de los resultados mediante reportes. Las funcionalidades fueron probadas utilizando datos de prueba y verificando que la información se almacenara correctamente en la base de datos MySQL.
