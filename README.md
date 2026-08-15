@@ -494,4 +494,157 @@ Además, los triggers `validar_stock` y `actualizar_stock` permiten controlar au
 
 La conexión definida en `conexion.py` permite que la aplicación desarrollada en Python trabaje directamente con MySQL, integrando la base de datos con los módulos del sistema.
 
-Esta implementación forma parte del proyecto final de **Programación II – Sistema de Gestión de Ventas: Mueblería Dios Bendice**.
+Esta implementación forma parte del proyecto final de **Programación II – Sistema de Gestión de Ventas: Mueblería Dios Bendice.
+
+######DANIELA REYES HEREDIA ---Login, Usuario y clientes.
+## Proyecto Final de Programación II
+
+#####Gestión de Usuarios y Clientes
+
+#Descripción
+
+En esta parte del proyecto trabajé en la creación de los módulos de usuarios y clientes. La idea principal fue organizar el código en diferentes partes para que cada una tenga una función específica y sea más fácil de entender y mantener.
+
+Para realizar esta parte utilicé Python, Tkinter y MySQL. Se trabajó con clases para representar los datos, repositorios para comunicarse con la base de datos, servicios para manejar las validaciones y las ventanas para que el usuario pueda interactuar con el sistema.
+
+1. Modelo de Usuario
+
+Primero se creó la clase "Usuario", que se utiliza para representar la información de cada usuario del sistema.
+
+La clase contiene los siguientes datos:
+
+- ID del usuario.
+- Nombre de usuario.
+- Contraseña.
+- Rol.
+- Estado.
+
+También se agregó el método "__str__()" para poder mostrar la información del usuario de una forma más organizada.
+
+2. Modelo de Cliente
+
+También se creó la clase "Cliente", que contiene los datos necesarios para registrar a los clientes.
+
+Los datos utilizados son:
+
+- ID del cliente.
+- Nombre.
+- Apellido.
+- Cédula.
+- Teléfono.
+- Dirección.
+- Correo electrónico.
+
+Al igual que en el modelo de usuario, se utilizó "__str__()" para representar la información del cliente.
+
+3. Repositorio de Usuarios
+
+Para trabajar con la base de datos se creó "UsuarioRepository".
+
+Esta clase se encarga de realizar las operaciones principales con los usuarios:
+
+- Crear usuarios.
+- Mostrar todos los usuarios.
+- Buscar un usuario por su nombre.
+- Actualizar usuarios.
+- Eliminar usuarios.
+
+Para realizar estas operaciones se utilizan consultas SQL y una conexión con MySQL. Después de realizar cambios en la base de datos se utiliza "commit()" para guardar los cambios.
+
+4. Repositorio de Clientes
+
+También se creó "ClienteRepository", encargado de manejar los datos de los clientes en la base de datos.
+
+Las operaciones principales son:
+
+- Crear clientes.
+- Obtener todos los clientes.
+- Buscar un cliente por su ID.
+- Actualizar clientes.
+- Eliminar clientes.
+
+De esta manera, las operaciones de la base de datos quedan separadas de las ventanas del programa.
+
+5. Servicio de Usuarios
+
+Se creó "UsuarioService" para manejar la lógica relacionada con los usuarios.
+
+Antes de crear un usuario se verifica que el nombre de usuario y la contraseña no estén vacíos.
+
+También se agregó la función de inicio de sesión. Para poder entrar al sistema se comprueba que:
+
+1. El usuario exista.
+2. El usuario se encuentre activo.
+3. La contraseña coincida.
+
+Si alguna de estas condiciones no se cumple, el inicio de sesión no permite continuar.
+
+6. Servicio de Clientes
+
+Para los clientes se creó "ClienteService".
+
+En este servicio se realizan algunas validaciones antes de guardar un cliente. Se verifica que estén completos los datos principales:
+
+- Nombre.
+- Apellido.
+- Cédula.
+- Teléfono.
+- Dirección.
+- Correo.
+
+Después de validar los datos, se crea el objeto "Cliente" y se envía al repositorio para guardarlo en la base de datos.
+
+También permite consultar, actualizar y eliminar clientes.
+
+7. Ventana de Inicio de Sesión
+
+Se creó una ventana utilizando Tkinter para que los usuarios puedan iniciar sesión.
+
+La ventana contiene:
+
+- Campo para el usuario.
+- Campo para la contraseña.
+- Botón de inicio de sesión.
+
+Cuando se presiona el botón, se comprueban los datos mediante "UsuarioService".
+
+Si los datos son correctos, aparece un mensaje indicando que el inicio de sesión fue exitoso y se abre el menú principal.
+
+Si los datos son incorrectos, se muestra un mensaje de error.
+
+8. Ventana de Gestión de Clientes
+
+También trabajé en la ventana de gestión de clientes utilizando Tkinter.
+
+Esta ventana permite registrar y administrar los clientes desde una interfaz gráfica.
+
+Los campos que se pueden llenar son:
+
+- Nombre.
+- Apellido.
+- Cédula.
+- Teléfono.
+- Dirección.
+- Correo.
+
+Además, se agregaron los botones:
+
+- Crear: permite registrar un nuevo cliente.
+- Actualizar: permite modificar los datos de un cliente seleccionado.
+- Eliminar: permite eliminar un cliente.
+
+Los clientes registrados se muestran en una tabla utilizando "Treeview".
+
+Al seleccionar un cliente de la tabla, sus datos se cargan automáticamente en los campos del formulario para poder modificarlos o eliminarlos.
+
+9. Organización del código
+
+La parte que trabajé quedó separada por responsabilidades. Los modelos contienen los datos, los repositorios trabajan con la base de datos, los servicios manejan la lógica y las ventanas se encargan de la interacción con el usuario.
+
+Esta organización ayuda a que el proyecto sea más ordenado y facilita realizar cambios posteriormente sin tener que modificar todo el programa.
+
+#Conclusión
+
+Con esta parte del proyecto se logró implementar la gestión de usuarios y clientes, incluyendo el inicio de sesión, registro, consulta, actualización y eliminación de información.
+
+El uso de Python, Tkinter y MySQL permitió conectar la interfaz gráfica con la lógica del programa y la base de datos. También aprendí a separar las diferentes funciones del sistema para que el código sea más fácil de organizar y mantener.
